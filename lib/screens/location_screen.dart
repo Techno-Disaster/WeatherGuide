@@ -4,7 +4,6 @@ import '../services/weather.dart';
 import '../utilities/constants.dart';
 import 'city_screen.dart';
 
-
 class LocationScreen extends StatefulWidget {
   LocationScreen({this.locationweather});
   final locationweather;
@@ -23,7 +22,13 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   double temp;
+  double humidity;
+  double tempmax;
+  double tempmin;
   String temperature;
+  String hum;
+  String temax;
+  String temin;
   String weatherIcon;
   String weatherstats;
   String cityname;
@@ -35,7 +40,14 @@ class _LocationScreenState extends State<LocationScreen> {
       var condition = weatherData['weather'][0]['id'];
       cityname = weatherData['name'];
       weatherIcon = weather.getWeatherIcon(condition);
+      humidity = weatherData['main']['humidity'].toDouble();
+      hum = humidity.toStringAsFixed(1);
+      tempmax = weatherData['main']['temp_max'].toDouble();
+      temax = tempmax.toStringAsFixed(1);
+      tempmin = weatherData['main']['temp_min'].toDouble();
+      temin = tempmin.toStringAsFixed(1);
       print(temp);
+      print(humidity);
     });
   }
 
@@ -106,6 +118,48 @@ class _LocationScreenState extends State<LocationScreen> {
                       '$temperature°C',
                       style: kTempTextStyle,
                     ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 150),
+                child: Text(
+                  'Humidity: $hum',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 200),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        'Max Temp: $temax°C',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Text(
+                        'Min Temp: $temin°C',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                    )
                   ],
                 ),
               ),
